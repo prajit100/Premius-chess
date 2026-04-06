@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"/>
+  <title>Premium Canvas Chess</title>
+  <link rel="stylesheet" href="styles.css"/>
+</head>
+<body>
+  <div id="app">
+    <header class="topbar">
+      <div class="brand">
+        <div class="logo"></div>
+        <div class="title">
+          <div class="name">Premium Chess</div>
+          <div class="sub">Canvas • Offline • Human vs AI</div>
+        </div>
+      </div>
+
+      <div class="status">
+        <div id="turnPill" class="pill">—</div>
+        <div id="gamePill" class="pill pill-secondary">Ready</div>
+      </div>
+
+      <div class="actions">
+        <button id="btnNew" class="btn">New Game</button>
+        <button id="btnRestart" class="btn btn-secondary">Restart</button>
+        <button id="btnUndo" class="btn btn-secondary">Undo</button>
+        <button id="btnFlip" class="btn btn-secondary">Flip</button>
+        <button id="btnTheme" class="btn btn-secondary">Theme</button>
+      </div>
+    </header>
+
+    <main class="layout">
+      <section class="boardCard">
+        <div class="canvasWrap">
+          <canvas id="board" width="900" height="900" aria-label="Chess board"></canvas>
+          <div id="toast" class="toast"></div>
+        </div>
+        <div class="underBoard">
+          <div class="meta">
+            <div class="metaRow">
+              <span class="label">Difficulty</span>
+              <span id="difficultyLabel" class="value">—</span>
+            </div>
+            <div class="metaRow">
+              <span class="label">You</span>
+              <span id="youLabel" class="value">—</span>
+            </div>
+            <div class="metaRow">
+              <span class="label">AI</span>
+              <span id="aiLabel" class="value">—</span>
+            </div>
+          </div>
+          <div class="captured">
+            <div class="capTitle">Captured</div>
+            <div class="capRows">
+              <div class="capRow">
+                <div class="capSide">White</div>
+                <div id="capWhite" class="capPieces"></div>
+              </div>
+              <div class="capRow">
+                <div class="capSide">Black</div>
+                <div id="capBlack" class="capPieces"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <aside class="sideCard">
+        <div class="panelHead">
+          <div class="panelTitle">Moves</div>
+          <div class="panelHint" id="engineHint">AI idle</div>
+        </div>
+
+        <div id="movelist" class="movelist" aria-label="Move list"></div>
+
+        <div class="panelHead panelHead2">
+          <div class="panelTitle">Settings</div>
+        </div>
+        <div class="settings">
+          <label class="settingRow">
+            <span>Sound</span>
+            <input id="toggleSound" type="checkbox" checked />
+          </label>
+          <label class="settingRow">
+            <span>Show legal moves</span>
+            <input id="toggleHints" type="checkbox" checked />
+          </label>
+        </div>
+
+        <div class="footnote">
+          Tip: drag pieces on desktop, tap-to-move on mobile.
+        </div>
+      </aside>
+    </main>
+  </div>
+
+  <!-- Start modal -->
+  <div id="startModal" class="modal" role="dialog" aria-modal="true">
+    <div class="modalCard">
+      <div class="modalTitle">Start a new game</div>
+      <div class="modalSubtitle">Choose your side and difficulty. Works fully offline.</div>
+
+      <div class="grid2">
+        <div class="block">
+          <div class="blockTitle">Play as</div>
+          <div class="seg">
+            <button class="segBtn" data-side="w">White</button>
+            <button class="segBtn" data-side="b">Black</button>
+          </div>
+        </div>
+
+        <div class="block">
+          <div class="blockTitle">Difficulty</div>
+          <div class="seg">
+            <button class="segBtn" data-level="easy">Easy</button>
+            <button class="segBtn" data-level="medium">Medium</button>
+            <button class="segBtn" data-level="hard">Hard</button>
+            <button class="segBtn" data-level="expert">Expert</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="block">
+        <div class="blockTitle">Options</div>
+        <label class="optRow">
+          <input id="optRanked" type="checkbox" />
+          <span>Ranked mode (disables Undo)</span>
+        </label>
+      </div>
+
+      <div class="modalActions">
+        <button id="btnStart" class="btn btn-primary btn-big" disabled>Start</button>
+      </div>
+
+      <div class="modalFine">
+        Chess rules: repetition, 50-move rule, en passant, castling, promotion, and full check legality.
+      </div>
+    </div>
+  </div>
+
+  <!-- Promotion modal -->
+  <div id="promoModal" class="modal" role="dialog" aria-modal="true" style="display:none">
+    <div class="modalCard">
+      <div class="modalTitle">Choose promotion</div>
+      <div class="modalSubtitle">Select a piece to promote your pawn.</div>
+      <div class="promoRow">
+        <button class="promoBtn" data-promo="q">Queen</button>
+        <button class="promoBtn" data-promo="r">Rook</button>
+        <button class="promoBtn" data-promo="b">Bishop</button>
+        <button class="promoBtn" data-promo="n">Knight</button>
+      </div>
+    </div>
+  </div>
+
+  <script type="module" src="main.js"></script>
+</body>
+</html>
