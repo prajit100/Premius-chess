@@ -1,160 +1,412 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8"/>
-  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"/>
-  <title>Premium Canvas Chess</title>
-  <link rel="stylesheet" href="styles.css"/>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Website Under Maintenance</title>
+
+  <meta
+    name="description"
+    content="Our website is currently undergoing scheduled maintenance. Please visit again soon."
+  />
+
+  <style>
+    :root {
+      --background: #07111f;
+      --background-secondary: #0d1b2f;
+      --card: rgba(13, 27, 47, 0.72);
+      --text: #f7f9fc;
+      --muted: #9eacc0;
+      --accent: #6c7cff;
+      --accent-secondary: #28d7c0;
+      --border: rgba(255, 255, 255, 0.12);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      min-height: 100vh;
+      overflow-x: hidden;
+      font-family:
+        Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
+        "Segoe UI", sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at 20% 20%, rgba(108, 124, 255, 0.22), transparent 30%),
+        radial-gradient(circle at 85% 80%, rgba(40, 215, 192, 0.16), transparent 28%),
+        linear-gradient(135deg, var(--background), var(--background-secondary));
+    }
+
+    .background-grid {
+      position: fixed;
+      inset: 0;
+      z-index: -3;
+      opacity: 0.17;
+      background-image:
+        linear-gradient(rgba(255, 255, 255, 0.08) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.08) 1px, transparent 1px);
+      background-size: 45px 45px;
+      mask-image: linear-gradient(to bottom, black, transparent);
+    }
+
+    .glow {
+      position: fixed;
+      z-index: -2;
+      width: 350px;
+      height: 350px;
+      border-radius: 50%;
+      filter: blur(80px);
+      opacity: 0.28;
+      animation: float 10s ease-in-out infinite;
+    }
+
+    .glow-one {
+      top: -100px;
+      left: -100px;
+      background: var(--accent);
+    }
+
+    .glow-two {
+      right: -100px;
+      bottom: -100px;
+      background: var(--accent-secondary);
+      animation-delay: -4s;
+    }
+
+    .maintenance-page {
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      padding: 30px 20px;
+    }
+
+    .maintenance-card {
+      width: min(760px, 100%);
+      padding: clamp(32px, 6vw, 64px);
+      text-align: center;
+      border: 1px solid var(--border);
+      border-radius: 28px;
+      background: var(--card);
+      box-shadow:
+        0 30px 80px rgba(0, 0, 0, 0.45),
+        inset 0 1px 0 rgba(255, 255, 255, 0.08);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      animation: cardEntrance 0.9s ease forwards;
+    }
+
+    .status-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 28px;
+      padding: 9px 16px;
+      color: #cdd5ff;
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      border: 1px solid rgba(108, 124, 255, 0.35);
+      border-radius: 999px;
+      background: rgba(108, 124, 255, 0.1);
+    }
+
+    .status-dot {
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      background: var(--accent-secondary);
+      box-shadow: 0 0 0 0 rgba(40, 215, 192, 0.5);
+      animation: pulse 1.8s infinite;
+    }
+
+    .icon-wrapper {
+      position: relative;
+      width: 130px;
+      height: 130px;
+      margin: 0 auto 28px;
+      display: grid;
+      place-items: center;
+    }
+
+    .orbit {
+      position: absolute;
+      inset: 0;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 50%;
+      animation: rotate 7s linear infinite;
+    }
+
+    .orbit::before {
+      content: "";
+      position: absolute;
+      top: 10px;
+      left: 50%;
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: var(--accent-secondary);
+      box-shadow: 0 0 18px var(--accent-secondary);
+      transform: translateX(-50%);
+    }
+
+    .tool-icon {
+      width: 76px;
+      height: 76px;
+      display: grid;
+      place-items: center;
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      border-radius: 22px;
+      background: linear-gradient(
+        145deg,
+        rgba(108, 124, 255, 0.24),
+        rgba(40, 215, 192, 0.1)
+      );
+      box-shadow: 0 12px 35px rgba(0, 0, 0, 0.3);
+    }
+
+    .tool-icon svg {
+      width: 38px;
+      height: 38px;
+      stroke: white;
+    }
+
+    h1 {
+      margin-bottom: 18px;
+      font-size: clamp(2.2rem, 7vw, 4.6rem);
+      line-height: 1.03;
+      letter-spacing: -0.055em;
+    }
+
+    .gradient-text {
+      color: transparent;
+      background: linear-gradient(90deg, #ffffff, #a8b0ff, #6ef2df);
+      background-clip: text;
+      -webkit-background-clip: text;
+    }
+
+    .description {
+      max-width: 590px;
+      margin: 0 auto;
+      color: var(--muted);
+      font-size: clamp(1rem, 2.2vw, 1.15rem);
+      line-height: 1.8;
+    }
+
+    .progress-section {
+      max-width: 500px;
+      margin: 36px auto 0;
+    }
+
+    .progress-header {
+      display: flex;
+      justify-content: space-between;
+      gap: 15px;
+      margin-bottom: 12px;
+      color: #dce2ed;
+      font-size: 0.88rem;
+    }
+
+    .progress-track {
+      height: 10px;
+      overflow: hidden;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.08);
+    }
+
+    .progress-bar {
+      width: 0;
+      height: 100%;
+      border-radius: inherit;
+      background: linear-gradient(90deg, var(--accent), var(--accent-secondary));
+      box-shadow: 0 0 20px rgba(108, 124, 255, 0.65);
+      animation: progress 2.2s ease forwards 0.5s;
+    }
+
+    .footer-message {
+      margin-top: 30px;
+      color: #77869c;
+      font-size: 0.82rem;
+      letter-spacing: 0.02em;
+    }
+
+    .footer-message span {
+      color: #b9c4d4;
+    }
+
+    @keyframes progress {
+      from {
+        width: 0;
+      }
+
+      to {
+        width: 78%;
+      }
+    }
+
+    @keyframes pulse {
+      0% {
+        box-shadow: 0 0 0 0 rgba(40, 215, 192, 0.55);
+      }
+
+      70% {
+        box-shadow: 0 0 0 10px rgba(40, 215, 192, 0);
+      }
+
+      100% {
+        box-shadow: 0 0 0 0 rgba(40, 215, 192, 0);
+      }
+    }
+
+    @keyframes rotate {
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    @keyframes float {
+      0%,
+      100% {
+        transform: translate3d(0, 0, 0);
+      }
+
+      50% {
+        transform: translate3d(25px, 35px, 0);
+      }
+    }
+
+    @keyframes cardEntrance {
+      from {
+        opacity: 0;
+        transform: translateY(30px) scale(0.97);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+
+    @media (max-width: 520px) {
+      .maintenance-card {
+        padding: 38px 22px;
+        border-radius: 22px;
+      }
+
+      .icon-wrapper {
+        width: 110px;
+        height: 110px;
+      }
+
+      .tool-icon {
+        width: 66px;
+        height: 66px;
+      }
+
+      .progress-header {
+        font-size: 0.8rem;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *,
+      *::before,
+      *::after {
+        scroll-behavior: auto !important;
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+      }
+    }
+  </style>
 </head>
+
 <body>
-  <div id="app">
-    <header class="topbar">
-      <div class="brand">
-        <div class="logo"></div>
-        <div class="title">
-          <div class="name">Premium Chess</div>
-          <div class="sub">Canvas • Offline • Human vs AI</div>
+  <div class="background-grid"></div>
+  <div class="glow glow-one"></div>
+  <div class="glow glow-two"></div>
+
+  <main class="maintenance-page">
+    <section class="maintenance-card">
+      <div class="status-badge">
+        <span class="status-dot"></span>
+        Scheduled Maintenance
+      </div>
+
+      <div class="icon-wrapper" aria-hidden="true">
+        <div class="orbit"></div>
+
+        <div class="tool-icon">
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke-width="1.7"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path d="M14.7 6.3a4 4 0 0 0-5.1 5.1L3 18l3 3 6.6-6.6a4 4 0 0 0 5.1-5.1l-2.4 2.4-3-3 2.4-2.4Z" />
+          </svg>
         </div>
       </div>
 
-      <div class="status">
-        <div id="turnPill" class="pill">—</div>
-        <div id="gamePill" class="pill pill-secondary">Ready</div>
-      </div>
+      <h1>
+        Making things
+        <span class="gradient-text">even better.</span>
+      </h1>
 
-      <div class="actions">
-        <button id="btnNew" class="btn">New Game</button>
-        <button id="btnRestart" class="btn btn-secondary">Restart</button>
-        <button id="btnUndo" class="btn btn-secondary">Undo</button>
-        <button id="btnFlip" class="btn btn-secondary">Flip</button>
-        <button id="btnTheme" class="btn btn-secondary">Theme</button>
-      </div>
-    </header>
+      <p class="description">
+        Website is currently undergoing scheduled maintenance and
+        improvements. It will be back online soon with a faster, smoother and
+        better experience.
+      </p>
 
-    <main class="layout">
-      <section class="boardCard">
-        <div class="canvasWrap">
-          <canvas id="board" width="900" height="900" aria-label="Chess board"></canvas>
-          <div id="toast" class="toast"></div>
-        </div>
-        <div class="underBoard">
-          <div class="meta">
-            <div class="metaRow">
-              <span class="label">Difficulty</span>
-              <span id="difficultyLabel" class="value">—</span>
-            </div>
-            <div class="metaRow">
-              <span class="label">You</span>
-              <span id="youLabel" class="value">—</span>
-            </div>
-            <div class="metaRow">
-              <span class="label">AI</span>
-              <span id="aiLabel" class="value">—</span>
-            </div>
-          </div>
-          <div class="captured">
-            <div class="capTitle">Captured</div>
-            <div class="capRows">
-              <div class="capRow">
-                <div class="capSide">White</div>
-                <div id="capWhite" class="capPieces"></div>
-              </div>
-              <div class="capRow">
-                <div class="capSide">Black</div>
-                <div id="capBlack" class="capPieces"></div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <aside class="sideCard">
-        <div class="panelHead">
-          <div class="panelTitle">Moves</div>
-          <div class="panelHint" id="engineHint">AI idle</div>
+      <div class="progress-section">
+        <div class="progress-header">
+          <span>System improvements in progress</span>
+          <span id="progressText">0%</span>
         </div>
 
-        <div id="movelist" class="movelist" aria-label="Move list"></div>
-
-        <div class="panelHead panelHead2">
-          <div class="panelTitle">Settings</div>
-        </div>
-        <div class="settings">
-          <label class="settingRow">
-            <span>Sound</span>
-            <input id="toggleSound" type="checkbox" checked />
-          </label>
-          <label class="settingRow">
-            <span>Show legal moves</span>
-            <input id="toggleHints" type="checkbox" checked />
-          </label>
-        </div>
-
-        <div class="footnote">
-          Tip: drag pieces on desktop, tap-to-move on mobile.
-        </div>
-      </aside>
-    </main>
-  </div>
-
-  <!-- Start modal -->
-  <div id="startModal" class="modal" role="dialog" aria-modal="true">
-    <div class="modalCard">
-      <div class="modalTitle">Start a new game</div>
-      <div class="modalSubtitle">Choose your side and difficulty. Works fully offline.</div>
-
-      <div class="grid2">
-        <div class="block">
-          <div class="blockTitle">Play as</div>
-          <div class="seg">
-            <button class="segBtn" data-side="w">White</button>
-            <button class="segBtn" data-side="b">Black</button>
-          </div>
-        </div>
-
-        <div class="block">
-          <div class="blockTitle">Difficulty</div>
-          <div class="seg">
-            <button class="segBtn" data-level="easy">Easy</button>
-            <button class="segBtn" data-level="medium">Medium</button>
-            <button class="segBtn" data-level="hard">Hard</button>
-            <button class="segBtn" data-level="expert">Expert</button>
-          </div>
+        <div
+          class="progress-track"
+          role="progressbar"
+          aria-label="Maintenance progress"
+          aria-valuemin="0"
+          aria-valuemax="100"
+          aria-valuenow="78"
+        >
+          <div class="progress-bar"></div>
         </div>
       </div>
 
-      <div class="block">
-        <div class="blockTitle">Options</div>
-        <label class="optRow">
-          <input id="optRanked" type="checkbox" />
-          <span>Ranked mode (disables Undo)</span>
-        </label>
-      </div>
+      <p class="footer-message">
+        Thank you for your patience. Please <span>visit again later.</span>
+      </p>
+    </section>
+  </main>
 
-      <div class="modalActions">
-        <button id="btnStart" class="btn btn-primary btn-big" disabled>Start</button>
-      </div>
+  <script>
+    const progressText = document.getElementById("progressText");
+    const targetProgress = 78;
+    let currentProgress = 0;
 
-      <div class="modalFine">
-        Chess rules: repetition, 50-move rule, en passant, castling, promotion, and full check legality.
-      </div>
-    </div>
-  </div>
+    function updateProgress() {
+      if (currentProgress < targetProgress) {
+        currentProgress += 1;
+        progressText.textContent = `${currentProgress}%`;
+        requestAnimationFrame(updateProgress);
+      }
+    }
 
-  <!-- Promotion modal -->
-  <div id="promoModal" class="modal" role="dialog" aria-modal="true" style="display:none">
-    <div class="modalCard">
-      <div class="modalTitle">Choose promotion</div>
-      <div class="modalSubtitle">Select a piece to promote your pawn.</div>
-      <div class="promoRow">
-        <button class="promoBtn" data-promo="q">Queen</button>
-        <button class="promoBtn" data-promo="r">Rook</button>
-        <button class="promoBtn" data-promo="b">Bishop</button>
-        <button class="promoBtn" data-promo="n">Knight</button>
-      </div>
-    </div>
-  </div>
-
-  <script type="module" src="main.js"></script>
+    setTimeout(updateProgress, 500);
+  </script>
 </body>
 </html>
